@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Go build output
+/bin/
+/chomp
+*.exe
+*.log
+*.out
+*.test
+
+# IDE/Editor
+.vscode/
+.idea/
