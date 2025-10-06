@@ -45,6 +45,8 @@ func CPUChoose(rng *rand.Rand, board *Board, difficulty bool) (int, int) {
 	// TODO: shuffle can panic -> make a defer func to see recovery
 	rng.Shuffle(len(moves), func(i, j int) { moves[i], moves[j] = moves[j], moves[i] })
 
+	// rand.Intn(10)
+
 	best := moves[0]
 	for _, m := range moves {
 		if m.score > best.score {

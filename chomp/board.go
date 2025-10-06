@@ -22,44 +22,44 @@ func (b *Board) PoisonEaten() bool {
 }
 
 func NewBoard(w, h int) *Board {
-	b := &Board{W: w, H: h, alive: true}
-	b.grid = make([][]bool, h)
+	board := &Board{W: w, H: h, alive: true}
+	board.grid = make([][]bool, h)
 	for y := 0; y < h; y++ {
-		b.grid[y] = make([]bool, w)
+		board.grid[y] = make([]bool, w)
 		for x := 0; x < w; x++ {
-			b.grid[y][x] = true
+			board.grid[y][x] = true
 		}
 	}
-	return b
+	return board
 }
 
-func (b *Board) IsUneaten(x, y int) bool {
-	return inBounds(b, x, y) && b.grid[y][x]
+func (board *Board) IsUneaten(x, y int) bool {
+	return inBounds(board, x, y) && board.grid[y][x]
 }
 
-func (b *Board) Chomp(x, y int) (atePoison bool, err error) {
-	if !inBounds(b, x, y) {
+func (board *Board) Chomp(x, y int) (atePoison bool, err error) {
+	if !inBounds(board, x, y) {
 		return false, errors.New("move out of bounds")
 	}
-	if !b.grid[y][x] {
+	if !board.grid[y][x] {
 		return false, errors.New("that square is already eaten")
 	}
-	for j := y; j < b.H; j++ {
-		for i := x; i < b.W; i++ {
-			b.grid[j][i] = false
+	for j := y; j < board.H; j++ {
+		for i := x; i < board.W; i++ {
+			board.grid[j][i] = false
 		}
 	}
-	if !b.grid[0][0] { // poison eaten :P
-		b.alive = false
+	if !board.grid[0][0] { // poison eaten :P
+		board.alive = false
 		return true, nil
 	}
 	return false, nil
 }
 
-func (b *Board) HasAnyMove() bool {
-	for y := 0; y < b.H; y++ {
-		for x := 0; x < b.W; x++ {
-			if b.grid[y][x] {
+func (board *Board) HasAnyMove() bool {
+	for y := 0; y < board.H; y++ {
+		for x := 0; x < board.W; x++ {
+			if board.grid[y][x] {
 				return true
 			}
 		}
@@ -67,24 +67,24 @@ func (b *Board) HasAnyMove() bool {
 	return false
 }
 
-func (b *Board) Draw() {
+func (board *Board) Draw() {
 	fmt.Print("    ")
-	for x := 0; x < b.W; x++ {
+	for x := 0; x < board.W; x++ {
 		fmt.Printf("%2d ", x+1)
 	}
 	fmt.Println()
 	fmt.Print("    ")
-	for x := 0; x < b.W; x++ {
+	for x := 0; x < board.W; x++ {
 		fmt.Print("───")
 	}
 	fmt.Println()
-	for y := 0; y < b.H; y++ {
+	for y := 0; y < board.H; y++ {
 		fmt.Printf("%2d │ ", y+1)
-		for x := 0; x < b.W; x++ {
+		for x := 0; x < board.W; x++ {
 			switch {
-			case x == 0 && y == 0 && b.grid[y][x]:
+			case x == 0 && y == 0 && board.grid[y][x]:
 				fmt.Printf("%c  ", cellPoison)
-			case b.grid[y][x]:
+			case board.grid[y][x]:
 				fmt.Printf("%c  ", cellUneaten)
 			default:
 				fmt.Printf("%c  ", cellGone)
