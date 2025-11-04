@@ -1,0 +1,12 @@
+# VCS + OS junk
+.git
+.gitignore
+.DS_Store
+
+# Local build outputs
+chomp
+*.out
+
+# Docs/media
+README.md
+extra/
